@@ -20,19 +20,3 @@ axios
   .catch(err =>
     console.log('Oops! Something went wrong! Try reloading the page!')
   );
-
-// fetch(`${BASE_URL}?api_key=${API_KEY}`)
-//   .then(response => {
-// if (!response.ok) {
-//   throw new Error(response.status);
-// }
-///     return response.json();
-//   })
-//   .then(data => {
-//     console.log(data);
-//   })
-// .catch(console.warn);
-// });
-
-// }
-// fetchBreeds();
