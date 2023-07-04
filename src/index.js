@@ -8,20 +8,18 @@ axios.defaults.headers.common['x-api-key'] = API_KEY;
 // const listCatBreeds = document.querySelector('breed - select');
 
 // function fetchBreeds() {
-const BASE_URL = 'https://api.thecatapi.com/v1/breeds123';
+const BASE_URL = 'https://api.thecatapi.com/v1/breeds';
 
 axios
   .get(`${BASE_URL}`)
   .then(response => {
     console.log(response);
-    // if ((response.status = 404)) {
-    //   throw new Error(response.status);
-    // }
-
     console.log(response.data);
     return response.data;
   })
-  .catch(console.warn);
+  .catch(err =>
+    console.log('Oops! Something went wrong! Try reloading the page!')
+  );
 
 // fetch(`${BASE_URL}?api_key=${API_KEY}`)
 //   .then(response => {
