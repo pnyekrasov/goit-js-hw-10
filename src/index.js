@@ -1,8 +1,9 @@
 import Notiflix from 'notiflix';
+import SlimSelect from 'slim-select';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
 const selectCatBreedsEl = document.querySelector('.breed-select');
-const waitingTextEl = document.querySelector('.loader');
+const waitingEl = document.querySelector('.loader');
 const catInforEl = document.querySelector('.cat-info');
 
 selectCatBreedsEl.hidden = true;
@@ -10,14 +11,18 @@ selectCatBreedsEl.hidden = true;
 fetchBreeds()
   .then(response => {
     selectCatBreedsEl.innerHTML = createListCatBreeds(response.data);
+    new SlimSelect({
+      select: '.breed-select',
+      //   data: [{ text: 'Value 1', value: 'value1' }],
+    });
     selectCatBreedsEl.hidden = false;
   })
-  .catch(
+  .catch(err =>
     Notiflix.Notify.failure(
       'Oops! Something went wrong! Try reloading the page!'
     )
   )
-  .finally((waitingTextEl.hidden = true));
+  .finally(() => waitingEl.classList.add('is-hidden'));
 
 function createListCatBreeds(array) {
   return array
@@ -26,7 +31,7 @@ function createListCatBreeds(array) {
 }
 
 selectCatBreedsEl.addEventListener('change', event => {
-  waitingTextEl.hidden = false;
+  waitingEl.classList.remove('is-hidden');
   const choiceBreed = event.target.value;
 
   fetchCatByBreed(choiceBreed)
@@ -38,7 +43,7 @@ selectCatBreedsEl.addEventListener('change', event => {
         'Oops! Something went wrong! Try reloading the page!'
       )
     )
-    .finally((waitingTextEl.hidden = true));
+    .finally(() => waitingEl.classList.add('is-hidden'));
 });
 
 function createCartCatInfor({
@@ -47,9 +52,10 @@ function createCartCatInfor({
     [0]: { name, description, temperament },
   },
 }) {
-  return `<img src="${url}" alt="${name}">
-<h2>${name}</h2>
+  return `<img class="cat-photo" src="${url}" alt="${name}">
+<div class="cat-cart">
+<h2 class="cat-name">${name}</h2>
 <p>${description}</p>
-<h3>Temperament: </h3>
-<p>${temperament}</p>`;
+<p><b>Temperament:</b> ${temperament}</p>
+</div>`;
 }
