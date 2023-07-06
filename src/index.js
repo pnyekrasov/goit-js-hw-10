@@ -9,10 +9,14 @@ const catInforEl = document.querySelector('.cat-info');
 
 selectCatBreedsEl.hidden = true;
 
-fetchBreeds().then(response => {
-  selectCatBreedsEl.innerHTML = createListCatBreeds(response.data);
-});
-selectCatBreedsEl.hidden = false
+fetchBreeds()
+  .then(response => {
+    selectCatBreedsEl.innerHTML = createListCatBreeds(response.data);
+    new SlimSelect({
+      select: '.breed-select',
+    });
+    selectCatBreedsEl.hidden = false;
+  })
   .catch(err =>
     Notiflix.Notify.failure(
       'Oops! Something went wrong! Try reloading the page!'
@@ -25,10 +29,6 @@ function createListCatBreeds(array) {
     .map(({ id, name }) => `<option value="${id}">${name}</option>`)
     .join('');
 }
-
-new SlimSelect({
-  select: '.breed-select',
-});
 
 selectCatBreedsEl.addEventListener('change', event => {
   waitingEl.classList.remove('is-hidden');
