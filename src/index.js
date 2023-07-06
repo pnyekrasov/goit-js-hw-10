@@ -7,10 +7,6 @@ const selectCatBreedsEl = document.querySelector('.breed-select');
 const waitingEl = document.querySelector('.loader');
 const catInforEl = document.querySelector('.cat-info');
 
-new SlimSelect({
-  select: '.breed-select',
-});
-
 selectCatBreedsEl.hidden = true;
 
 fetchBreeds().then(response => {
@@ -29,6 +25,10 @@ function createListCatBreeds(array) {
     .map(({ id, name }) => `<option value="${id}">${name}</option>`)
     .join('');
 }
+
+new SlimSelect({
+  select: '.breed-select',
+});
 
 selectCatBreedsEl.addEventListener('change', event => {
   waitingEl.classList.remove('is-hidden');
