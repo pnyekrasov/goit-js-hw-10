@@ -1,22 +1,22 @@
 import Notiflix from 'notiflix';
 import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
 const selectCatBreedsEl = document.querySelector('.breed-select');
 const waitingEl = document.querySelector('.loader');
 const catInforEl = document.querySelector('.cat-info');
 
+new SlimSelect({
+  select: '.breed-select',
+});
+
 selectCatBreedsEl.hidden = true;
 
-fetchBreeds()
-  .then(response => {
-    selectCatBreedsEl.innerHTML = createListCatBreeds(response.data);
-    new SlimSelect({
-      select: '.breed-select',
-      //   data: [{ text: 'Value 1', value: 'value1' }],
-    });
-    selectCatBreedsEl.hidden = false;
-  })
+fetchBreeds().then(response => {
+  selectCatBreedsEl.innerHTML = createListCatBreeds(response.data);
+});
+selectCatBreedsEl.hidden = false
   .catch(err =>
     Notiflix.Notify.failure(
       'Oops! Something went wrong! Try reloading the page!'
